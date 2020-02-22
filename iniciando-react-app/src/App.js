@@ -8,7 +8,7 @@ class App extends React.Component {
 
   }
 
-  modificarNome = (event) => {
+  modificarNome = (event) => { // No react só pode existir uma função, as demais tem que ser arrow functions ou criar um construtor fazendo o bind (Aula 12) || ARROW FUNCTIONS SAO MAIS PRODUTIVAS
 
     let nome = event.target.value; //target = o componente, neste caso vai ser o input || value = o valor que o componente está guardando, no caso o que o usuário digitou.
 
@@ -19,7 +19,24 @@ class App extends React.Component {
     })
 
   }
+
+  criarComboBox = () => {
+
+    const opcoes = ['Igor Ribeiro', 'Lucas Ribeiro']
+    const comboBoxOpcoes = opcoes.map( opcao => <option>{opcao}</option> )
+
+    return (
+
+      <select>
+        {comboBoxOpcoes}
+      </select>
+
+    )
+
+  }
   render(){
+
+    const MeuComboBox = () => this.criarComboBox() //Permite criar uma tag personalizada - SEMPRE USAR A PRIMEIRA LETRA MAIUSCULA
 
     return(
 
@@ -27,6 +44,7 @@ class App extends React.Component {
 
         <input type = "text" value = {this.state.nome} onChange = { this.modificarNome } />
         <h1>Hello {this.state.nome}</h1>
+        <MeuComboBox />
 
       </>
 
