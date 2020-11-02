@@ -1,9 +1,9 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import CadastroProduto from './components/views/produtos/cadastro'
-import Home from './components/views/home'
-import ConsultaProdutos from './components/views/produtos/consulta'
+import Home from './views/home'
+import CadastroProduto from './views/produtos/cadastro'
+import ConsultaProdutos from './views/produtos/consulta'
 
 
 export default () => {
