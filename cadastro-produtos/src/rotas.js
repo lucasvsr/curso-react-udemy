@@ -9,8 +9,6 @@ export default () => {
 
     return (
 
-        <HashRouter>
-
             <Switch>
 
                 <Route exact
@@ -27,7 +25,6 @@ export default () => {
                        
             </Switch>
 
-        </HashRouter>
 
     )
 
