@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-constructor */
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import ProdutoService from '../../../app/produtoService'
 
 const estadoInicial = {
@@ -14,7 +15,7 @@ const estadoInicial = {
 
 }
 
-export default class CadastroProduto extends React.Component {
+class CadastroProduto extends React.Component {
 
     state = estadoInicial
 
@@ -65,6 +66,30 @@ export default class CadastroProduto extends React.Component {
     limparCampos = () => {
 
         this.setState(estadoInicial)
+
+    }
+
+    componentDidMount() {
+
+        const sku = this.props.match.params.sku
+
+
+        if(sku) {
+
+            let produtos = this.service.carregar(sku)
+
+            if(produtos.length === 1) {
+
+                const produto = produtos[0]
+                this.setState({ ...produto })
+
+            }
+
+        } else {
+
+            this.setState({ estadoInicial })
+
+        }
 
     }
 
@@ -221,3 +246,5 @@ export default class CadastroProduto extends React.Component {
     }
     
 }
+
+export default withRouter(CadastroProduto)

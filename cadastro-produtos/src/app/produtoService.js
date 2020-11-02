@@ -48,9 +48,15 @@ export default class ProdutoService {
 
     }
 
-    carregar = () => {
+    carregar = (sku) => {
 
         let produtos = JSON.parse(localStorage.getItem(PRODUTOS))
+
+        if(sku) {
+            
+           return produtos.filter(produto => produto.sku === sku)
+
+        }
 
         return produtos
 

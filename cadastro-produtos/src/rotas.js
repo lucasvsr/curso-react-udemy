@@ -1,9 +1,10 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from 'react'
-import { HashRouter, Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import CadastroProduto from './components/views/produtos/cadastro'
 import Home from './components/views/home'
-import { ConsultaProdutos } from './components/views/produtos/consulta'
+import ConsultaProdutos from './components/views/produtos/consulta'
+
 
 export default () => {
 
@@ -12,7 +13,7 @@ export default () => {
             <Switch>
 
                 <Route exact
-                       path="/cadastro-produtos" 
+                       path="/cadastro-produtos/:sku?" 
                        component={CadastroProduto} />
 
                 <Route exact
