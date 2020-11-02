@@ -9,7 +9,8 @@ const estadoInicial = {
     descricao: '',
     preco: '',
     fornecedor: '',
-    sucesso: false
+    sucesso: false,
+    errors: []
 
 }
 
@@ -44,10 +45,20 @@ export default class CadastroProduto extends React.Component {
 
         }
 
-        console.log(produto);
-        this.service.salvar(produto);
-        this.limparCampos()
-        this.setState({sucesso : true})
+        try {
+            
+            this.service.salvar(produto);
+            this.limparCampos()
+            this.setState({sucesso : true})
+
+        } catch (error) {
+
+            const errors = error.errors
+            this.setState({errors: errors})
+            
+        }
+        
+        
 
     }
 
@@ -72,14 +83,34 @@ export default class CadastroProduto extends React.Component {
                         this.state.sucesso && //O && diz que não precisa informar o caso contrário (quando for false)
                         (
 
-                        <div class="alert alert-dismissible alert-success">
-                            <button type="button"
-                                class="close"
-                                data-dismiss="alert">&times;</button>
-                            <strong>Produto cadastro.</strong> Pode buscá-lo no catalogo
-                        </div>
+                            <div class="alert alert-dismissible alert-success">
+                                <button type="button"
+                                    class="close"
+                                    data-dismiss="alert">&times;</button>
+                                <strong>Produto cadastro.</strong> Pode buscá-lo no catalogo
+                            </div>
 
                         )
+                    }
+
+                    {
+                        this.state.errors && this.state.errors.length > 0 &&
+
+                        this.state.errors.map(error => {
+
+                            return(
+
+                                <div class="alert alert-dismissible alert-danger">
+                                    <button type="button"
+                                        class="close"
+                                        data-dismiss="alert">&times;</button>
+                                    <strong>Erro!</strong> {error}
+                                </div>
+
+                            )
+
+                        })
+                        
                     }
 
                     
