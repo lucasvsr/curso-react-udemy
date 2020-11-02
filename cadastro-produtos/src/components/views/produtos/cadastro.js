@@ -11,7 +11,8 @@ const estadoInicial = {
     preco: '',
     fornecedor: '',
     sucesso: false,
-    errors: []
+    errors: [],
+    atualizando: false
 
 }
 
@@ -36,6 +37,8 @@ class CadastroProduto extends React.Component {
 
     onSubmit = (event) => {
 
+        console.log('onSubmit');
+
         let produto = {
 
             nome: this.state.nome,
@@ -48,6 +51,7 @@ class CadastroProduto extends React.Component {
 
         try {
             
+            console.log('tentando salvar');
             this.service.salvar(produto);
             this.limparCampos()
             this.setState({sucesso : true})
@@ -58,8 +62,6 @@ class CadastroProduto extends React.Component {
             this.setState({errors: errors})
             
         }
-        
-        
 
     }
 
@@ -81,7 +83,7 @@ class CadastroProduto extends React.Component {
             if(produtos.length === 1) {
 
                 const produto = produtos[0]
-                this.setState({ ...produto })
+                this.setState({ ...produto, atualizando: true })
 
             }
 
@@ -100,7 +102,7 @@ class CadastroProduto extends React.Component {
             <>
 
             <div className="card text-white bg-primary mb-3">
-                <div className="card-header">CADASTRO DE PRODUTOS</div>
+                <div className="card-header">{this.state.atualizando === true ? 'ATUALIZAÇÃO' : 'CADASTRO'} DE PRODUTO</div>
 
                 <div className="card-body">
 
@@ -163,7 +165,8 @@ class CadastroProduto extends React.Component {
                                        className="form-control"
                                        value={this.state.sku}
                                        name="sku"
-                                       onChange={this.onChange} />
+                                       onChange={this.onChange}
+                                       disabled={this.state.atualizando} />
 
                             </div>
                             
@@ -219,10 +222,14 @@ class CadastroProduto extends React.Component {
 
                     <div className="row">
 
-                    <div className="col-md-1">
+                    <div className="col-md-2">
 
                         <button className="btn btn-success" 
-                                onClick={this.onSubmit}>Salvar</button>
+                                onClick={this.onSubmit}>
+
+                            {this.state.atualizando === true ? 'Atualizar' : 'Salvar'}
+
+                        </button>
 
                     </div>
 

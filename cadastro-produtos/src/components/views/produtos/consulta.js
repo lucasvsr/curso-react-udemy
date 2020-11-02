@@ -42,6 +42,12 @@ class ConsultaProdutos extends React.Component {
 
     }
 
+    deletar = (sku) => {
+
+        const produtos = this.service.deletar(sku)
+        this.setState({produtos})
+    }
+
     render() {
 
         return(
@@ -76,7 +82,8 @@ class ConsultaProdutos extends React.Component {
 
                                             <button className="btn btn-outline-primary"
                                                     onClick={() => this.preparaEditar(produto.sku)}>Editar</button>
-                                            <button className="btn btn-outline-danger">Remover</button>
+                                            <button className="btn btn-outline-danger"
+                                                    onClick={() => this.deletar(produto.sku)}>Remover</button>
 
                                         </th>
 

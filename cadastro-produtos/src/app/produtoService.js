@@ -26,15 +26,35 @@ export default class ProdutoService {
 
     }
 
+    obterIndex = (sku) => {
+
+        console.log('obterIndex');
+
+       let index = null;
+       
+       this.carregar().forEach((produto, i) => {
+
+            if(produto.sku === sku) index = i
+
+       })
+
+       console.log('saiu obterIndex');
+
+       return index
+
+    }
+
     salvar = (produto) => {
 
         this.validar(produto)
 
         let produtos = localStorage.getItem(PRODUTOS)
+       
 
         if(!produtos) {
 
             produtos = []
+            console.log(produto);
 
         } else {
 
@@ -42,8 +62,20 @@ export default class ProdutoService {
 
         }
 
-        produtos.push(produto)
+        let index = this.obterIndex(produto.sku)
+        console.log(index);
 
+        if(index === null) {
+
+            produtos.push(produto)
+
+        } else {
+
+            produtos[index] = produto
+
+        }
+
+        console.log('salvar');
         localStorage.setItem(PRODUTOS, JSON.stringify(produtos))
 
     }
@@ -51,6 +83,8 @@ export default class ProdutoService {
     carregar = (sku) => {
 
         let produtos = JSON.parse(localStorage.getItem(PRODUTOS))
+
+        if(!produtos) produtos = []
 
         if(sku) {
             
@@ -62,4 +96,22 @@ export default class ProdutoService {
 
     }
     
+    deletar = (sku) => {
+
+        const index = this.obterIndex(sku)
+
+        if(index !== null) {
+
+            const produtos = this.carregar()
+
+            produtos.splice(index, 1)
+
+            localStorage.setItem(PRODUTOS, JSON.stringify(produtos))
+
+            return produtos
+
+        }
+
+    }
+
 }
