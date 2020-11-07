@@ -4,7 +4,7 @@ import { mostrar } from './mensagemReducer'
 
 const http = Axios.create({
 
-  baseURL: 'https://minhastarefas-api.herokuapp.com',
+  baseURL: process.env.REACT_APP_API_BASEURL,
   headers: { 'x-tenant-id': localStorage.getItem('email_usuario_logado') }
 
 })
@@ -56,15 +56,16 @@ export const tarefaReducer = (state = ESTADO_INICIAL, action) => {
         quantidade: action.tarefas.length}
     
     case ACTIONS.SALVAR:
-      const lista = [...state.tarefas, action.tarefa]
+      const listaSalvar = [...state.tarefas, action.tarefa]
       return {...state, 
-        tarefas: lista,
-        quantidade: lista.length}
+        tarefas: listaSalvar,
+        quantidade: listaSalvar.length}
     
     case ACTIONS.ALTERAR:
+      const listaAlteracao = [...state.tarefas]
       return {...state, 
         tarefas: retornarLista(state.tarefas, action.type, action.id),
-        quantidade: action.tarefas.length}
+        quantidade: listaAlteracao.length}
     
     case ACTIONS.REMOVER:
       const listaSemRemovido = retornarLista(state.tarefas, action.type, action.id)
@@ -153,7 +154,7 @@ export function remover(id) {
           type: ACTIONS.REMOVER,
           id: id
 
-        }], mostrar('Tarefa excluída com sucesso!'))
+        }, mostrar('Tarefa excluída com sucesso!')])
 
       })
 
