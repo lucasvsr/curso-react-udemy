@@ -7,6 +7,9 @@ import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { compose } from 'redux'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,6 +37,8 @@ const Topbar = props => {
 
   }
 
+  console.log(props.notificacoes)
+
   return (
     <AppBar
       {...rest}
@@ -50,9 +55,8 @@ const Topbar = props => {
         <Hidden mdDown>
           <IconButton color="inherit">
             <Badge
-              badgeContent={notifications.length}
-              color="primary"
-              variant="dot"
+              badgeContent={props.notificacoes}
+              color="secundary"
             >
               <NotificationsIcon />
             </Badge>
@@ -83,4 +87,15 @@ Topbar.propTypes = {
   onSidebarOpen: PropTypes.func
 };
 
-export default withRouter(Topbar);
+const mapStateToProps = state => ({
+
+  notificacoes: state.tarefas.quantidade
+
+})
+
+const mapDispatchToProps = dispatch => 
+  bindActionCreators({}, dispatch)
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps), 
+  withRouter)(Topbar);
