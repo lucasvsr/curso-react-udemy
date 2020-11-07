@@ -36,10 +36,15 @@ const TarefasToolbar = props => {
 
   const submit = (event) => {
 
-    event.preventDefault()
+    const tarefa = {
+      descricao, 
+      categoria
+    }
 
-    console.log(`Valores: ${descricao}, categoria - ${categoria}`);
-
+    props.salvar(tarefa)
+    setCategoria('')
+    setDescricao('')
+    
   }
 
   return (
@@ -85,7 +90,7 @@ const TarefasToolbar = props => {
               >
                 <MenuItem value="">Selecione...</MenuItem>
                 <MenuItem value={'TRABALHO'} >Trabalho</MenuItem>
-                <MenuItem value={'ESTUDO'} >Estudos</MenuItem>
+                <MenuItem value={'ESTUDOS'} >Estudos</MenuItem>
                 <MenuItem value={'OUTROS'} >Outros</MenuItem>
               </Select>
 

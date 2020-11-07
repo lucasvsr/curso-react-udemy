@@ -2,6 +2,7 @@ import {
   Card,
 
   CardContent,
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -13,6 +14,9 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import TimerIcon from '@material-ui/icons/Timer'
+import DoneAllIcon from '@material-ui/icons/DoneAll'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 
 const useStyles = makeStyles(theme => ({
@@ -36,8 +40,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TarefasTable = props => {
-  const { className, tarefas, ...rest } = props;
 
+  const { className, tarefas, ...rest } = props;
   const classes = useStyles();
 
   return (
@@ -57,10 +61,52 @@ const TarefasTable = props => {
                   <TableCell>Descrição</TableCell>
                   <TableCell>Categoria</TableCell>
                   <TableCell>Status</TableCell>
+                  <TableCell />
                 </TableRow>
               </TableHead>
 
               <TableBody>
+
+                {tarefas.map((tarefa) => {
+
+                  return(
+
+                    <TableRow key={tarefa.id}>
+
+                      <TableCell>{tarefa.id}</TableCell>
+                      <TableCell>{tarefa.descricao}</TableCell>
+                      <TableCell>{tarefa.categoria}</TableCell>
+                      <TableCell>{tarefa.done ? 'Feito' : 'Pendente'}</TableCell>
+                      <TableCell>
+                        <IconButton
+                          color="secondary"
+                          onClick={e => props.alterarStatus(tarefa.id)}
+                        >
+                          {tarefa.done ?
+                            (<DoneAllIcon />) : 
+                            (<TimerIcon />)
+
+
+                          }
+                        </IconButton>
+                      </TableCell>
+                      <TableCell>
+                        <IconButton
+                          color="primary" 
+                          onClick={e => props.deletar(tarefa.id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+
+                    </TableRow>
+
+                  )
+
+
+                })
+
+                }
                 
               </TableBody>
 
